@@ -78,13 +78,30 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
-// Serve built client in production
-const clientDist = path.join(__dirname, "..", "client", "dist");
-if (fs.existsSync(clientDist)) {
+// Serve the built client in production.
+// Checks several common layouts so it works regardless of how the files
+// are arranged on the host (e.g. Hostinger's Node.js / Passenger setup).
+const distCandidates = [
+  process.env.CLIENT_DIST, // explicit override
+  path.join(__dirname, "..", "client", "dist"),
+  path.join(__dirname, "public"),
+  path.join(__dirname, "dist"),
+].filter(Boolean);
+
+const clientDist = distCandidates.find((p) => fs.existsSync(p));
+
+if (clientDist) {
+  console.log(`Serving static client from: ${clientDist}`);
   app.use(express.static(clientDist));
-  app.get("*", (_req, res) => {
+  // SPA fallback for React Router — but never swallow API routes.
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api/")) return next();
     res.sendFile(path.join(clientDist, "index.html"));
   });
+} else {
+  console.warn(
+    "No client build found. Run `npm run build` and deploy client/dist."
+  );
 }
 
 app.listen(PORT, () => {
