@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { navLinks } from "../data/company.js";
 import Logo from "./Logo.jsx";
 import Icon from "./Icon.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -24,17 +25,6 @@ export default function Navbar() {
       <div className="container nav__inner">
         <Logo />
 
-        <button
-          className="nav__toggle"
-          aria-label="Toggle navigation menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-
         <nav className={`nav__links ${open ? "is-open" : ""}`}>
           {navLinks.map((link) => (
             <NavLink
@@ -52,6 +42,20 @@ export default function Navbar() {
             Get a Quote <Icon name="arrow" size={16} />
           </NavLink>
         </nav>
+
+        <div className="nav__actions">
+          <ThemeToggle />
+          <button
+            className="nav__toggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
     </header>
   );

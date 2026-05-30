@@ -9,6 +9,20 @@
       content="LUXORA NOVA TRADING - FZCO: trusted Dubai-based wholesale trader of computer systems, communication equipment, mobile phones, and home appliances."
     />
     <title>LUXORA NOVA TRADING - FZCO | Technology & Electronics Wholesale Trading</title>
+    <script>
+      // Apply saved/system theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t !== "light" && t !== "dark") {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          }
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
