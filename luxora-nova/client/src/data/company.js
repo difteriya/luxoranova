@@ -13,8 +13,8 @@ export const company = {
   issueDate: "19 May 2026",
   expiryDate: "18 May 2027",
   address: {
-    premises: "DSO-IFZA",
-    building: "IFZA Properties",
+    building: "Building A1",
+    premises: "Dubai Digital Park",
     area: "Dubai Silicon Oasis",
     city: "Dubai",
     country: "United Arab Emirates",
