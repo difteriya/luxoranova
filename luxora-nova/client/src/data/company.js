@@ -21,9 +21,8 @@ export const company = {
   },
   contact: {
     email: "info@luxoranova.com",
-    sales: "sales@luxoranova.com",
-    phone: "+971 4 000 0000",
-    whatsapp: "+971 50 000 0000",
+    phone: "+971 50 689 4919",
+    whatsapp: "+971 50 689 4919",
     hours: "Sunday – Thursday, 09:00 – 18:00 (GST)",
   },
   founded: "2026",

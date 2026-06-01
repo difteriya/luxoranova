@@ -4,6 +4,11 @@ import { services } from "../data/services.js";
 import PageHeader from "../components/PageHeader.jsx";
 import Icon from "../components/Icon.jsx";
 
+// Web3Forms access key (free, tied to info@luxoranova.com).
+// Generate one at https://web3forms.com and paste it below — submissions
+// are delivered straight to the inbox, no backend required.
+const WEB3FORMS_ACCESS_KEY = "77670afa-c348-4510-960c-2049c68c31d8";
+
 const initialForm = {
   name: "",
   email: "",
@@ -23,16 +28,40 @@ export default function Contact() {
     e.preventDefault();
     setStatus({ state: "loading", message: "" });
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          from_name: form.name,
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          subject: `Website enquiry — ${form.subject || "General enquiry"}`,
+          message: form.message,
+        }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Something went wrong. Please try again.");
+
+      // Guard against non-JSON responses (e.g. an HTML error page) so the
+      // user never sees a cryptic "Unexpected token '<'" message.
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        throw new Error("Something went wrong. Please try again later.");
       }
-      setStatus({ state: "success", message: data.message });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Something went wrong. Please try again.");
+      }
+
+      setStatus({
+        state: "success",
+        message:
+          "Thank you for contacting LUXORA NOVA TRADING. Our team will get back to you within one business day.",
+      });
       setForm(initialForm);
     } catch (err) {
       setStatus({ state: "error", message: err.message });
@@ -68,9 +97,6 @@ export default function Contact() {
                   <strong>Email</strong>
                   <a href={`mailto:${company.contact.email}`}>
                     {company.contact.email}
-                  </a>
-                  <a href={`mailto:${company.contact.sales}`}>
-                    {company.contact.sales}
                   </a>
                 </div>
               </li>
