@@ -20,7 +20,7 @@ export const company = {
     country: "United Arab Emirates",
   },
   contact: {
-    email: "info@luxoranova.com",
+    email: "info@luxoranova.ae",
     phone: "+971 50 689 4919",
     whatsapp: "+971 50 689 4919",
     hours: "Sunday – Thursday, 09:00 – 18:00 (GST)",

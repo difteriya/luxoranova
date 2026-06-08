@@ -4,7 +4,7 @@ import { services } from "../data/services.js";
 import PageHeader from "../components/PageHeader.jsx";
 import Icon from "../components/Icon.jsx";
 
-// Web3Forms access key (free, tied to info@luxoranova.com).
+// Web3Forms access key (free, tied to info@luxoranova.ae).
 // Generate one at https://web3forms.com and paste it below — submissions
 // are delivered straight to the inbox, no backend required.
 const WEB3FORMS_ACCESS_KEY = "77670afa-c348-4510-960c-2049c68c31d8";
