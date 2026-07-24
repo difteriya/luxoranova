@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
 
 export default function Logo({ footer = false }) {
+  // The footer sits on a permanently dark background, so it always uses the
+  // white wordmark. In the navbar we render both variants and let CSS reveal
+  // the correct one based on the active theme (data-theme on <html>).
+  if (footer) {
+    return (
+      <Link to="/" className="logo logo--footer" aria-label="Luxora Nova Trading — home">
+        <img className="logo__img" src="/logo-dark.svg" alt="Luxora Nova Trading" />
+      </Link>
+    );
+  }
+
   return (
-    <Link to="/" className={`logo ${footer ? "logo--footer" : ""}`}>
-      <span className="logo__mark" aria-hidden="true">
-        <svg viewBox="0 0 40 40" width="34" height="34">
-          <rect width="40" height="40" rx="10" fill="var(--navy)" />
-          <path
-            d="M13 10v20h14"
-            fill="none"
-            stroke="var(--orange)"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <circle cx="27" cy="13" r="4" fill="var(--orange)" />
-        </svg>
-      </span>
-      <span className="logo__text">
-        <strong>LUXORA NOVA</strong>
-        <em>Trading — FZCO</em>
-      </span>
+    <Link to="/" className="logo" aria-label="Luxora Nova Trading — home">
+      <img
+        className="logo__img logo__img--light"
+        src="/logo-light.svg"
+        alt="Luxora Nova Trading"
+      />
+      <img
+        className="logo__img logo__img--dark"
+        src="/logo-dark.svg"
+        alt="Luxora Nova Trading"
+        aria-hidden="true"
+      />
     </Link>
   );
 }
